@@ -18,15 +18,6 @@ flujo=flujo*un.J*(un.m**-2)*(un.nm**-1)*(un.s**-1) # J s-1 m-2 nm-1
 long_onda=long_onda.to('um') #pasamos a micron
 flujo=flujo.to('erg/(s cm2 um)') #pasamos a erg s-1 cm-2 um-1
 
-fig1 = plt.figure()
-ax=fig1.add_subplot(111)
-ax.fill_between(long_onda,flujo,edgecolor='k',facecolor='w')
-ax.set_xlim(0, 5)
-ax.set_ylim(0, 2.5e6)
-plt.xlabel('Longitud de onda [$um$]')
-plt.ylabel('Flujo [$erg$ $s^{-1}cm^{-2}um^{-1}$]')
-plt.title('Espectro del Sol')
-plt.savefig('espectro_sol.png')
 
 #parte 2
 tiempo1=t.time()
@@ -49,17 +40,17 @@ def fint(x):   #funcion de la integral
     return (np.tan(x)**3) / ((np.cos(x)**2)*((np.exp(np.tan(x)))-1))
 
 
-a=0.05
-b=m.pi/2-0.05
-n=2000
-dx=(b-a)/n
-x=np.linspace(a,b,n)
+a=0.05 #partimos en 0.05 y no en 0
+b=m.pi/2-0.05 #temrinamos en pi/2 - 0.05 y no en pi/2
+n=2000 #precisión del vector
+dx=(b-a)/n #discretización
+x=np.linspace(a,b,n) #vector equispaciado
 x=np.array(x)
-y=fint(x)
+y=fint(x) #función de la integral
 integral=0
 tiempo3=t.time()
 for i in range(0,len(y)-1):
-    integral=integral+(y[i+1]+y[i])*dx/2
+    integral=integral+(y[i+1]+y[i])*dx/2 #integramos usando trapecios 
 tiempo3=t.time()-tiempo3
 T=5778*un.K
 
